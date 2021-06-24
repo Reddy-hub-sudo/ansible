@@ -1,0 +1,11 @@
+---
+- name: apache-server
+  hosts: all
+  become: yes
+  
+  tasks:
+    - name: ensure apache is latest version installed
+      apt:
+        name: apache2
+        update_cache: yes
+        state: present
