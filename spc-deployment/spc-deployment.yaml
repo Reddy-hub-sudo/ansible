@@ -1,0 +1,31 @@
+---
+- name: webserver
+  hosts: ubuntu
+  become: yes
+  tasks:
+    - name: apt update and installing openjdk-11
+      apt:
+        name: openjdk-11-jdk -y
+        state: present
+        update_cache: yes
+    - name: make directory
+      ansible.builtin.file:
+        path: /usr/share/springpetclinic
+        state: directory
+    - name: copy url
+      ansible.builtin.copy:
+        src: https://referenceapplicationskhaja.s3-us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar
+        dest: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
+    - name: add user springbootuser
+      ansible.builtin.user:
+        name: springbootuser
+        password: india@123
+        state: present
+    - name: change ownership of jar file
+      ansible.builtin.file:
+        path: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
+        owner: springbootuser
+        mode: '500'
+        state: file
+
+
