@@ -9,7 +9,7 @@
         update_cache: yes
         state: present
     - name: Create a spring-petclinic directory
-      ansible.builtin.file:
+      file:
         path: /usr/share/springpetclinic
         state: directory
     - name: download spring petclinic
@@ -17,12 +17,12 @@
         url: https://referenceapplicationskhaja.s3-us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar
         dest: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
     - name: Create springbootuser
-      ansible.builtin.user:
+      user:
         name: springbootuser
         password: spring
         state: present
     - name: Change ownership of jar file
-      ansible.builtin.file:
+      file:
         path: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
         owner: springbootuser
         mode: '500'
