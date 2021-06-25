@@ -1,28 +1,28 @@
 ---
-- name: Webserver
+- name: Deploy spring petclinic as Linux Service
   hosts: ubuntu
   become: yes
   tasks:
-    - name: Apt update and installing openjdk-11
+    - name: Update ubuntu packages and install java
       apt:
         name: openjdk-11-jdk
         update_cache: yes
         state: present
-    - name: Create a spring-petclinic directory
-      ansible.builtin.file:
+    - name: Create a spring petclinic directory
+      file:
         path: /usr/share/springpetclinic
         state: directory
     - name: download spring petclinic
       get_url:
         url: https://referenceapplicationskhaja.s3-us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar
         dest: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
-    - name: Add user springbootuser
-      ansible.builtin.user:
+    - name: Create springbootuser
+      user:
         name: springbootuser
-        password: india@123
+        password: springbootuser
         state: present
     - name: Change ownership of jar file
-      ansible.builtin.file:
+      file:
         path: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
         owner: springbootuser
         mode: '500'
