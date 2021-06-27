@@ -24,3 +24,8 @@
       systemd:
         state: restarted
         name: apache2
+    - name: permit traffic in default zone for https service
+      firewalld:
+        port: 8080/tcp
+        permanent: yes
+        state: enabled
