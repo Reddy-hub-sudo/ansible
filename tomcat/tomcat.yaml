@@ -32,10 +32,6 @@
       copy:
         src: "service"
         dest: /etc/systemd/system/tomcat.service
-    - name: daemon reload
-      systemd:
-        state: started
-        name: daemon
     - name: start tomcat
       systemd:
         state: started
