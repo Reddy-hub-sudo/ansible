@@ -1,0 +1,47 @@
+---
+- name: Deploy tomcat on ubuntu
+  hosts: webserver
+  become: yes
+  tasks:
+    - name: Install java
+      apt:
+        name: openjdk-11-jdk
+        state: present
+        update_cache: yes
+
+    - name: create group tomcat
+      group:
+        name: tomcat
+        state: present
+    - name: create a user tomcat
+      user:
+        name: tomcat
+        shell: /bin/false
+        group: tomcat
+    - name: Create a directory 
+      file:
+        path: /opt/tomcat
+        state: directory
+        owner: tomcat
+        group: tomcat
+    - name: Download location
+      get_url:
+        url: https://mirrors.estointernet.in/apache/tomcat/tomcat-9/v9.0.48/bin/apache-tomcat-9.0.48.tar.gz
+        dest: /tmp
+    - name: Copy file tomcat.service
+      copy:
+        src: "service"
+        dest: /etc/systemd/system/tomcat.service
+    - name: daemon reload
+      systemd:
+        state: reloaded
+        name: daemon
+    - name: start tomcat
+      systemd:
+        state: started
+        name: tomcat
+    - name: Allow all access to tcp port 80
+      ufw:
+        rule: allow
+        port: '8080'
+        proto: tcp
