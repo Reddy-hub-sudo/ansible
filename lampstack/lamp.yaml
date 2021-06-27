@@ -1,0 +1,26 @@
+---
+- name: Deploy LAMP stack on ubuntu Service
+  hosts: ubuntu
+  become: yes
+  tasks:
+    - name: Update ubuntu packages and apache2
+      apt:
+        name: apache2
+        update_cache: yes
+        state: present
+    - name: Update ubuntu packages and install php
+      apt:
+        name:
+        - php
+        - libapache2-mod-php
+        - php-mysql
+        - php-cli
+        state: present
+    - name: Copying text in to info
+      copy:
+        src: /info.php
+        dest: /var/www/html/info.php
+    - name: Make sure a service unit is running
+      systemd:
+      state: restart
+      name: apache2

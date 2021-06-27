@@ -9,6 +9,12 @@
     java_package: openjdk-11-jdk
     file_owner: springbootuser
   tasks:
+    - name: Checking variables var1
+      debug:
+        var: test_var1
+    - name: Checking variables var2
+      debug:
+        var: test_var2
     - name: Update ubuntu packages and install java
       apt:
         name: "{{ java_package }}"
