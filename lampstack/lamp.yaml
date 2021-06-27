@@ -18,7 +18,7 @@
         state: present
     - name: Copying text in to info
       copy:
-        src: /info.php
+        src: "info.php"
         dest: /var/www/html/info.php
     - name: Make sure a service unit is running
       systemd:
