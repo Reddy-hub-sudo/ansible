@@ -8,6 +8,7 @@
         name: apache2
         update_cache: yes
         state: present
+      notify: apache2 installation
     - name: Update ubuntu packages and install php
       apt:
         name:
@@ -20,14 +21,19 @@
       copy:
         src: "info.php"
         dest: /var/www/html/info.php
+      notify: info package
     - name: Make sure a service unit is running
       systemd:
         state: restarted
         name: apache2
-    - name: permit traffic in default zone for https service
-      firewalld:
-        port: 8080/tcp
-        permanent: yes
-        state: enabled
-      vars:
-        ansible_python_interpreter: '/usr/bin/python3'
+      notify: status of apache2
+  handlers:
+    - name: apche2 installation
+      debug:
+        msg: apache2 is installed
+    - name: info package
+      debug:
+        msg: info package is installed
+    - name: status of apache2
+      debug:
+        msg: restarted apache2
