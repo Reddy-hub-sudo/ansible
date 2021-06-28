@@ -27,10 +27,10 @@
     - name: Download location
       get_url:
         url: https://mirrors.estointernet.in/apache/tomcat/tomcat-9/v9.0.48/bin/apache-tomcat-9.0.48.tar.gz
-        dest: /tmp
+        dest: "/tmp/apache-tomcat-9.0.48.tar.gz"
     - name: Extract tomcat tar file
       unarchive:
-        src: /tmp
+        src: "/tmp/apache-tomcat-9.0.48.tar.gz"
         dest: /opt/tomcat
     - name: Copy file tomcat.service
       copy:
