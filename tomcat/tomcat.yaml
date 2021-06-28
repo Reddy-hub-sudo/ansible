@@ -24,13 +24,17 @@
         state: directory
         owner: tomcat
         group: tomcat
+    - name: Create a directory of /tmp 
+      file:
+        path: /tmp
+        state: directory
     - name: Download location
       get_url:
         url: https://mirrors.estointernet.in/apache/tomcat/tomcat-9/v9.0.48/bin/apache-tomcat-9.0.48.tar.gz
-        dest: "/tmp/apache-tomcat-9.0.48.tar.gz"
+        dest: /tmp
     - name: Extract tomcat tar file
       unarchive:
-        src: "/tmp/apache-tomcat-9.0.48.tar.gz"
+        src: /tmp/apache-tomcat-9.0.48.tar.gz
         dest: /opt/tomcat
     - name: Copy file tomcat.service
       copy:
