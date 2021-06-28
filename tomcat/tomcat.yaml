@@ -35,6 +35,18 @@
     - name: untar the tomcat
       command: "sudo tar xzvf /tmp/apache-tomcat-9.0.46.tar.gz -C /opt/tomcat --strip-components=1"
       when: not tomcat_conf.stat.exists
+    - name: Copy file tomcat.service
+      copy:
+        src: "service"
+        dest: /etc/systemd/system/tomcat.service
+    - name: daemon reload
+      systemd:
+        state: reloaded
+        name: daemon
+    - name: start tomcat
+      systemd:
+        state: started
+        name: tomcat
     - name: Allow all access to tcp port 80
       ufw:
         rule: allow
