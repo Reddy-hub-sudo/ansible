@@ -13,25 +13,28 @@
       group:
         name: tomcat
         state: present
+    - name: Create a directory 
+      file:
+        path: /opt/tomcat
+        state: directory
     - name: create a user tomcat
       user:
         name: tomcat
         shell: /bin/false
         group: tomcat
-    - name: Create a directory 
-      file:
-        path: /opt/tomcat
-        state: directory
-        owner: tomcat
-        group: tomcat
+        home: /opt/tomcat
+   
     - name: Download location
       get_url:
         url: https://mirrors.estointernet.in/apache/tomcat/tomcat-9/v9.0.48/bin/apache-tomcat-9.0.48.tar.gz
         dest: /tmp/apache-tomcat-9.0.46.tar.gz
-    - name: Extract tomcat tar file
-      unarchive:
-        src: /tmp/apache-tomcat-9.0.46.tar.gz
-        dest: /opt/tomcat
+    - name: Check if the tomcat is extracted
+      stat:
+        path: /opt/tomcat/conf
+      register: tomcat_conf
+    - name: untar the tomcat
+      command: "sudo tar xzvf /tmp/apache-tomcat-9.0.46.tar.gz -C /opt/tomcat --strip-components=1"
+      when: not tomcat_conf.stat.exists
     - name: Allow all access to tcp port 80
       ufw:
         rule: allow
