@@ -34,7 +34,7 @@
         dest: /tmp
     - name: Extract tomcat tar file
       unarchive:
-        src: /tmp/apache-tomcat-9.0.48.tar.gz
+        src: /tmp
         dest: /opt/tomcat
     - name: Copy file tomcat.service
       copy:
