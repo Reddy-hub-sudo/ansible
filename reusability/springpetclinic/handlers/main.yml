@@ -1,13 +1,13 @@
 ---
 - name: Give secure permissions to an existing file
-    file:
-      path: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
-      owner: springbootuser
-      state: file
-      mode: '500'
+  file:
+    path: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
+    owner: springbootuser
+    state: file
+    mode: '500'
 - name: debug msg for installing java
-    debug:
-      msg: java with package is installed.
+  debug:
+    msg: java with package is installed.
 - name : debug msg for directory creation
-    debug:
-      msg: creating a directory
+  debug:
+    msg: creating a directory
