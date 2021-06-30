@@ -1,0 +1,58 @@
+---
+- name: web_application
+  hosts: appserver
+  become: yes
+
+  tasks:
+    - name: fail the execution when the distribution is not ubuntu
+      fail:
+        msg: this play book only supports
+      when: ansible_facts['distribution'] != "Ubuntu"
+    - name: installing openjdk-11
+      apt: 
+        name: openjdk-11-jdk -y
+        update_cache: yes
+        state: present
+      notify:
+        - debug msg for installing java
+    - name: create a directory
+      file:
+        path: /usr/share/springpetclinic
+        state: directory
+      notify:
+        - debug msg for directory creation
+    - name: download springpet-clinic from /usr/share/springpetclinic
+      get_url:
+        url: wget https://referenceapplicationskhaja.s3-us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar
+        dest: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
+    - name: Add the user springbootuser
+      user:
+        name: springbootuser
+        state: present
+      notify:
+        - Give secure permissions to an existing file
+    - name: Copy a file to linux
+      copy:
+        src: /springpetclinic.service
+        dest: /etc/systemd/system/springpetclinic.service
+    - name: Enable service springpetclinic.service
+      service:
+        name: springpetclinic.service
+        enabled: yes
+    - name: Start service springpetclinic.service, if not started
+      service:
+        name: springpetclinic.service
+        state: started
+  handlers:
+    - name: Give secure permissions to an existing file
+      file:
+        path: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
+        owner: springbootuser
+        state: file
+        mode: '500'
+    - name: debug msg for installing java
+      debug:
+        msg: java with package is installed.
+    - name : debug msg for directory creation
+      debug:
+        msg: creating a directory

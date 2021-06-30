@@ -1,0 +1,26 @@
+---
+- name: lampstack
+  become: yes
+  hosts: all
+  tasks:
+    - name: install apache2
+      apt:
+        name: apache2
+        update_cache: yes
+        state: present
+    - name: Install a list of packages
+      apt:
+        pkg:
+          - php
+          - libapache2-mod-php
+          - php-mysql
+          - php-cli
+      state: present
+    - name: Copy a file with info.php
+      copy:
+        src: /info.php
+        dest: /var/www/html/info.php
+    - name: Restart service apache2
+      service:
+        name: apache2
+        state: restarted

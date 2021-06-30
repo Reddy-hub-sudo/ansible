@@ -1,29 +1,29 @@
 ---
 - name: Deploy spring petclinic as Linux Service
-  hosts: ubuntu
+  hosts: all
   become: yes
   tasks:
     - name: Update ubuntu packages and install java
       apt:
-        name: openjdk-11-jdk
+        name: "{{ java_package }}"
         update_cache: yes
         state: present
     - name: Create a spring-petclinic directory
       file:
-        path: /usr/share/springpetclinic
+        path: "{{ directory_path }}"
         state: directory
     - name: download spring petclinic
       get_url:
-        url: https://referenceapplicationskhaja.s3-us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar
-        dest: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
+        url: "{{ url_link }}"
+        dest: "{{ app_file_name }}"
     - name: Create springbootuser
       user:
-        name: springbootuser
+        name: "{{ user }}"
         password: spring
         state: present
     - name: Change ownership of jar file
       file:
-        path: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
-        owner: springbootuser
+        path: "{{ app_file_name }}"
+        owner: "{{ user }}"
         mode: '500'
         state: file
