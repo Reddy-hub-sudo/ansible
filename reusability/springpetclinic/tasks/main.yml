@@ -1,48 +1,48 @@
 ---
 - name: fail the execution when the distribution is not ubuntu
-    fail:
-      msg: this play book only supports
-    when: ansible_facts['distribution'] != "Ubuntu" and ansible_facts['distribution'] != "CentOs"
+  fail:
+    msg: this play book only supports
+  when: ansible_facts['distribution'] != "Ubuntu" and ansible_facts['distribution'] != "CentOs"
 - name: installing openjdk-11
-    apt: 
-      name: "{{ java_package }}"
-      update_cache: yes
-      state: present
-    notify:
-      - debug msg for installing java
-    when: ansible_facts['distribution'] == "Ubuntu"
+  apt: 
+    name: "{{ java_package }}"
+    update_cache: yes
+    state: present
+  notify:
+    - debug msg for installing java
+  when: ansible_facts['distribution'] == "Ubuntu"
 - name: installing java on CentOs
-    yum: 
-      name: "{{ java_package }}"
-      state: present
-    notify:
-      - debug msg for installing java
-    when: ansible_facts['distribution'] == "CentOs"
+  yum: 
+    name: "{{ java_package }}"
+    state: present
+  notify:
+    - debug msg for installing java
+  when: ansible_facts['distribution'] == "CentOs"
 - name: create a directory
-    file:
-      path: "{{ directory_path }}"
-      state: directory
-    notify:
-      - debug msg for directory creation
+  file:
+    path: "{{ directory_path }}"
+    state: directory
+  notify:
+    - debug msg for directory creation
 - name: download springpet-clinic from /usr/share/springpetclinic
-    get_url:
-      url: "{{ url_link }}"
-      dest: "{{ app_file_name }}"
+  get_url:
+    url: "{{ url_link }}"
+    dest: "{{ app_file_name }}"
 - name: Add the user springbootuser
-    user:
-      name: "{{ user }}"
-      state: present
-    notify:
-      - Give secure permissions to an existing file
+  user:
+    name: "{{ user }}"
+    state: present
+  notify:
+    - Give secure permissions to an existing file
 - name: Copy a file to linux
-      copy:
-        src: /springpetclinic.service
-        dest: /etc/systemd/system/springpetclinic.service
+  copy:
+    src: /springpetclinic.service
+    dest: /etc/systemd/system/springpetclinic.service
 - name: Enable service springpetclinic.service
-    service:
-      name: springpetclinic.service
-      enabled: yes
+  service:
+    name: springpetclinic.service
+    enabled: yes
 - name: Start service springpetclinic.service, if not started
-    service:
-      name: springpetclinic.service
-      state: started
+  service:
+    name: springpetclinic.service
+    state: started
