@@ -1,6 +1,6 @@
 ---
 - name: install springpet-clinic
   become: yes
-  hosts: appserver
+  hosts: all
   roles:
     - springpetclinic
