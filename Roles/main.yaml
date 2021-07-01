@@ -1,0 +1,5 @@
+- name: Deploy LAMP stack on ubuntu Service
+  hosts: all
+  become: yes
+  roles:
+    - lamp

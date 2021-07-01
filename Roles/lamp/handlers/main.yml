@@ -1,0 +1,8 @@
+---
+- name: apche2 installation
+  service:
+    name: "{{ apache_package }}"
+    state: restarted
+- name: info package
+  debug:
+    msg: info package is installed
