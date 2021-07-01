@@ -46,7 +46,6 @@
       systemd:
         state: restarted
         name: "{{ apache_package }}"
-      notify: status of {{ apache_package }}
   handlers:
     - name: apche2 installation
       service:
@@ -55,6 +54,3 @@
     - name: info package
       debug:
         msg: info package is installed
-    - name: status of "{{ apache_package }}"
-      debug:
-        msg: restarted "{{ apache_package }}"
