@@ -16,7 +16,7 @@
       when: ansible_facts['distribution'] == "Ubuntu"
     - name: Update CentOS packages and httpd
       yum:
-        name: "{{ apache_package }}"
+        name: httpd
         state: present
       notify: httpd installation
       when: ansible_facts['distribution'] == "CentOS"
