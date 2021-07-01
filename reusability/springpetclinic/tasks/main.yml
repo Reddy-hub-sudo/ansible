@@ -1,8 +1,8 @@
 ---
-- name: fail the execution when the distribution is not ubuntu
+- name: fail the execution when the distribution is not ubuntu and CentOS
   fail:
     msg: this play book only supports
-  when: ansible_facts['distribution'] != "Ubuntu" and ansible_facts['distribution'] != "CentOs"
+  when: ansible_facts['distribution'] != "Ubuntu" and ansible_facts['distribution'] != "CentOS"
 - name: installing openjdk-11
   apt: 
     name: "{{ java_package }}"
@@ -17,7 +17,7 @@
     state: present
   notify:
     - debug msg for installing java
-  when: ansible_facts['distribution'] == "CentOs"
+  when: ansible_facts['distribution'] == "CentOS"
 - name: create a directory
   file:
     path: "{{ directory_path }}"
