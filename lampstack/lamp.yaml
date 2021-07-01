@@ -13,6 +13,13 @@
         update_cache: yes
         state: present
       notify: apache2 installation
+      when: ansible_facts['distribution'] == "Ubuntu"
+    - name: Update CentOS packages and httpd
+      yum:
+        name: "{{ apache_package }}"
+        state: present
+      notify: httpd installation
+      when: ansible_facts['distribution'] == "CentOS"
     - name: Update ubuntu packages and install php
       apt:
         name:
