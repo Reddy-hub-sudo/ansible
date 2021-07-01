@@ -11,7 +11,7 @@
   notify:
     - debug msg for installing java
   when: ansible_facts['distribution'] == "Ubuntu"
-- name: installing java on CentOs
+- name: installing java on CentOS
   yum: 
     name: "{{ java_package }}"
     state: present
