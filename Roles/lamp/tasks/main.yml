@@ -8,13 +8,13 @@
     name: "{{ apache_package }}"
     update_cache: yes
     state: present
-    notify: apache2 installation
+    # notify: apache2 installation
   when: ansible_facts['distribution'] == "Ubuntu"
 - name: Update CentOS packages and httpd
   yum:
     name: httpd
     state: present
-    notify: httpd installation
+    # notify: httpd installation
   when: ansible_facts['distribution'] == "CentOS"
 - name: Update ubuntu packages and install php
   apt:
@@ -37,7 +37,7 @@
   copy:
     src: "info.php"
     dest: /var/www/html/info.php
-    notify: info package
+    # notify: info package
 - name: Make sure a service unit is running
   systemd:
     state: restarted
