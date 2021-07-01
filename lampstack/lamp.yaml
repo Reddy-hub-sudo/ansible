@@ -1,6 +1,6 @@
 ---
 - name: Deploy LAMP stack on ubuntu Service
-  hosts: ubuntu
+  hosts: all
   become: yes
   tasks:
     - name: Update ubuntu packages and apache2
