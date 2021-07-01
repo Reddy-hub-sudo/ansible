@@ -29,8 +29,9 @@
       notify: status of apache2
   handlers:
     - name: apche2 installation
-      debug:
-        msg: apache2 is installed
+      service:
+        name: apache2 is installed
+        state: restarted
     - name: info package
       debug:
         msg: info package is installed
