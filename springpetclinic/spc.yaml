@@ -29,7 +29,7 @@
         mode: '500'
     - name: Copy a file to linux
       copy:
-        src: /springpetclinic.service
+        src: springpetclinic.service
         dest: /etc/systemd/system/springpetclinic.service
     - name: Enable service springpetclinic.service
       service:
