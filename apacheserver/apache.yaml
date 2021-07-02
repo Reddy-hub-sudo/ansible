@@ -1,6 +1,6 @@
 ---
 - name: apache-server
-  hosts: all
+  hosts: local host
   become: yes
   
   tasks:
