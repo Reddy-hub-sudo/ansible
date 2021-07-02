@@ -1,0 +1,44 @@
+---
+- name: This playbook will work only on Ubuntu and CentOS machines
+  fail:
+    msg: This playbook works only on Ubuntu and CentOS 
+  when: ansible_facts['distribution'] != "Ubuntu" and ansible_facts['distribution'] != "CentOS"
+- name: Update ubuntu packages and apache2
+  apt:
+    name: "{{ apache_package }}"
+    update_cache: yes
+    state: present
+    # notify: apache2 installation
+  when: ansible_facts['distribution'] == "Ubuntu"
+- name: Update CentOS packages and httpd
+  yum:
+    name: httpd
+    state: present
+    # notify: httpd installation
+  when: ansible_facts['distribution'] == "CentOS"
+- name: Update ubuntu packages and install php
+  apt:
+    name:
+      - php
+      - libapache2-mod-php
+      - php-mysql
+      - php-cli
+    state: present
+  when: ansible_facts['distribution'] == "Ubuntu"
+- name: Update yum packages and install php
+  yum:
+    name:
+      - php
+      - php-mysql
+      - php-fpm
+    state: present
+  when: ansible_facts['distribution'] == "CentOS"
+- name: Copying text in to info
+  copy:
+    src: "info.php"
+    dest: /var/www/html/info.php
+    # notify: info package
+- name: Make sure a service unit is running
+  systemd:
+    state: restarted
+    name: "{{ apache_package }}"
