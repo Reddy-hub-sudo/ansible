@@ -7,6 +7,6 @@ services:
     volumes:
       - type: volume
         source: loggol
-        target: var/my_data
+        target: /var/log
     networks:
-      - reddy-network
+      - reddy_network
