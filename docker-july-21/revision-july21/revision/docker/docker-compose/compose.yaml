@@ -4,9 +4,5 @@ services:
     build: ./gol
     ports:
       - 8080:8080
-    volumes:
-      - type: volume
-        source: loggol
-        target: /var/log
     networks:
       - reddy_network
