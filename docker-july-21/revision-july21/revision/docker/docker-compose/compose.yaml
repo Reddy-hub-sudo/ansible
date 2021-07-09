@@ -4,5 +4,3 @@ services:
     build: ./gol
     ports:
       - 8080:8080
-    networks:
-      - reddy_network
