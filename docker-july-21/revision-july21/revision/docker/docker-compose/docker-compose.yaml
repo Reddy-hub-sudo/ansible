@@ -1,0 +1,13 @@
+---
+version: "3.9"
+services:
+  gol
+    build: ./build.dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - type: volume
+        source: loggol
+        target: var/my_data
+    networks:
+      - reddy-network
